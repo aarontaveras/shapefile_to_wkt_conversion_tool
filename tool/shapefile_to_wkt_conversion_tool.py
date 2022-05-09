@@ -42,13 +42,13 @@ if (len(sys.argv))>1: #if parameters are present, run in ArcPro as a tool
 ## Set input paths
 #########################################################################
 
-inputSHP=r"C:\Users\aTaveras\Desktop\tamarisk removal\tamarisk removal.shp" #default input path (enter shapefile path here)
+inputSHP=r"C:\Users\aTaveras\Desktop\Peavine_Property\Peavine_Property.shp" #default input path (enter shapefile path here)
 
 #########################################################################
 # Set output paths
 #########################################################################
 
-output="C:/Users/aTaveras/Desktop/WKT Conversion.txt" #default output path
+output="C:/Users/aTaveras/Desktop/WKT_Conversion.txt" #default output path
 
 #########################################################################
 # If running in a tool, get the parameters from the Arc Tool GUI
@@ -78,9 +78,9 @@ arcpy.env.overwriteOutput=True
 MyPrint("#-----Begining Pre-Processing-----#") #prints message to ArcPro dialog that processing has begun
 
 try:
-    dfc = arcpy.management.Dissolve(inputSHP, "C:\Temp\gis_temp\wkt_temp.shp", "", "", "MULTI_PART", "") #create multipart feature
+    dfc = arcpy.management.Dissolve(inputSHP, "C:\Temp\Temp_GIS_Files\wkt_temp.shp", "", "", "MULTI_PART", "") #create multipart feature
     sr = arcpy.SpatialReference('WGS 1984 Web Mercator (Auxiliary Sphere)') #output WKT in WGS 1984 Web Mercator (Auxiliary Sphere)
-    
+
     MyPrint(arcpy.GetMessages()) #prints ArcPro dialog processing messages
     MyPrint("#-----Pre-Processing Completed Successfully-----#") #prints message to ArcPro dialog
 
@@ -111,8 +111,8 @@ except:
 MyPrint("#-----Saving Result to File-----#") #prints message to ArcPro dialog that processing has begun
 
 try:
-    outputWKT = open(output,'w')
-    print(row[0], file=outputWKT)
+    with open(output, "w") as outputWKT:
+        print(row[0], file=outputWKT)
 
     del row
     del cursor
