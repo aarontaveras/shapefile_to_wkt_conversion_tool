@@ -1,5 +1,5 @@
 #########################################################################
-# Shapefile to WKT Conversion
+# Shapefile to WKT Conversion Tool
 # Author: Aaron Taveras
 # Date Created: 2/17/2022
 # Debugging must done using Python 3.x.
@@ -30,12 +30,12 @@ def MyPrint(Message):
     else: print(Message)
 
 #########################################################################
-## Determine if we are running within ArcPro (as a tool) or not
+## Determine if we are running within ArcGIS Pro (as a tool) or not
 #########################################################################
 
-RunningInArcPro=False #assume we are not running as a tool in ArcPro
+RunningInArcPro=False #assume we are not running as a tool in ArcGIS Pro
 
-if (len(sys.argv))>1: #if parameters are present, run in ArcPro as a tool
+if (len(sys.argv))>1: #if parameters are present, run in ArcGIS Pro as a tool
     RunningInArcPro=True
 
 #########################################################################
@@ -51,12 +51,12 @@ inputSHP=r"C:\Users\aTaveras\Desktop\SHPO_Area\WGS84.shp" #default input path (e
 output="C:/Users/aTaveras/Desktop/WKT_Conversion.txt" #default output path
 
 #########################################################################
-# If running in a tool, get the parameters from the Arc Tool GUI
+# If running in a tool, get the parameters from the ArcGIS Pro Tool GUI
 #########################################################################
 
 if (RunningInArcPro): #if running in a tool, get the parameters from the Arc Tool GUI
-    inputSHP=arcpy.GetParameterAsText(0) #sets parameter for Shapefile input in ArcPro
-    output=arcpy.GetParameterAsText(1) #sets parameter for WKT ouput in ArcPro
+    inputSHP=arcpy.GetParameterAsText(0) #sets parameter for Shapefile input in ArcGIS Pro
+    output=arcpy.GetParameterAsText(1) #sets parameter for WKT ouput in ArcGIS Pro
 
 #########################################################################
 # Prints all parameters for debugging
@@ -88,33 +88,33 @@ try:
     sr = arcpy.SpatialReference('WGS 1984 Web Mercator (Auxiliary Sphere)') #output WKT in WGS 1984 Web Mercator (Auxiliary Sphere)
     
     MyPrint(arcpy.GetMessages()) #prints ArcPro dialog processing messages
-    MyPrint("#-----Pre-Processing Completed Successfully-----#") #prints message to ArcPro dialog
+    MyPrint("#-----Pre-Processing Completed Successfully-----#") #prints message to ArcGIS Pro dialog
 
 except:
     MyPrint(arcpy.GetMessages()) #prints ArcPro dialog processing messages
-    MyPrint("#-----Failed-----#") #prints message to ArcPro dialog
+    MyPrint("#-----Failed-----#") #prints message to ArcGIS Pro dialog
 
 #########################################################################
 ## File conversion
 #########################################################################
 
-MyPrint("#-----Begining Conversion-----#") #prints message to ArcPro dialog that processing has begun
+MyPrint("#-----Begining Conversion-----#") #prints message to ArcGIS Pro dialog that processing has begun
 
 try:
     cursor = arcpy.da.SearchCursor(dfc, ["SHAPE@WKT"], spatial_reference=sr) #convert to WKT projected on the fly and print
     for row in cursor:
         print(row[0])
 
-    MyPrint("#-----Conversion Completed Successfully-----#") #prints message to ArcPro dialog
+    MyPrint("#-----Conversion Completed Successfully-----#") #prints message to ArcGIS Pro dialog
 
 except:
-    MyPrint("#-----Failed-----#") #prints message to ArcPro dialog
+    MyPrint("#-----Failed-----#") #prints message to ArcGIS Pro dialog
 
 #########################################################################
 ## Save result to file
 #########################################################################
 
-MyPrint("#-----Saving Result to File-----#") #prints message to ArcPro dialog that processing has begun
+MyPrint("#-----Saving Result to File-----#") #prints message to ArcGIS Pro dialog that processing has begun
 
 try:
     with open(output, "w") as outputWKT:
@@ -123,7 +123,7 @@ try:
     del row
     del cursor
 
-    MyPrint("#-----Result was Saved Successfully-----#") #prints message to ArcPro dialog
+    MyPrint("#-----Result was Saved Successfully-----#") #prints message to ArcGIS Pro dialog
 
 except:
-    MyPrint("#-----Failed-----#") #prints message to ArcPro dialog
+    MyPrint("#-----Failed-----#") #prints message to ArcGIS Pro dialog
