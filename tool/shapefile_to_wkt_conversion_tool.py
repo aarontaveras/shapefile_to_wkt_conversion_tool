@@ -51,10 +51,10 @@ inputSHP=r"C:\Users\aTaveras\Desktop\SHPO_Area\WGS84.shp" #default input path (e
 output="C:/Users/aTaveras/Desktop/WKT_Conversion.txt" #default output path
 
 #########################################################################
-# If running in a tool, get the parameters from the ArcGIS Pro Tool GUI
+# If running in a tool, get the parameters from the ArcGIS Pro tool GUI
 #########################################################################
 
-if (RunningInArcPro): #if running in a tool, get the parameters from the Arc Tool GUI
+if (RunningInArcPro): #if running in a tool, get the parameters from the ArcGIS Pro tool GUI
     inputSHP=arcpy.GetParameterAsText(0) #sets parameter for Shapefile input in ArcGIS Pro
     output=arcpy.GetParameterAsText(1) #sets parameter for WKT ouput in ArcGIS Pro
 
